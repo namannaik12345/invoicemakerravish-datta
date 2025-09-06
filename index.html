@@ -2,39 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>REE/DATTATRAYA Invoice/Quotation</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invoice/Quotation Generator</title>
 <style>
 body { font-family: Arial, sans-serif; background: #f4f7fa; margin:0; padding:0;}
-.container { max-width: 950px; background: #fff; margin: 30px auto; border-radius: 8px; padding: 30px 32px 37px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12);}
+.container { max-width: 950px; background: #fff; margin: 30px auto; border-radius: 8px; padding: 30px 32px 37px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);}
 h1 { text-align: center; font-weight: bold; margin-bottom: 24px; color: #1f2937;}
 .top-row {display:flex;align-items:center;gap:16px;justify-content:flex-end;}
 label { font-weight: bold;}
 select, input[type=checkbox] {font-size: 15px;}
 .tabs { display: flex; justify-content: center; margin-bottom: 21px;}
-.tab {
-  cursor: pointer; padding: 12px 34px; font-weight: bold; font-size: 1.15rem;
-  border: 1.5px solid #ccc; border-bottom: none; background: #d3d3d3;
-  color: #444; border-radius: 8px 8px 0 0; margin: 0 10px; transition: background-color 0.2s;}
+.tab { cursor: pointer; padding: 12px 34px; font-weight: bold; font-size: 1.15rem; border: 1.5px solid #ccc; border-bottom: none; background: #d3d3d3; color: #444; border-radius: 8px 8px 0 0; margin: 0 10px;}
 .tab.active.invoice { background: #0078d7; color: white; border-color: #005ea6;}
 .tab.active.quotation { background: #2e8b57; color: white; border-color: #276749;}
-.static-details { background:#f3f6fa; border-radius: 7px; padding:14px 20px 14px 20px; margin-bottom:13px; font-size: 15px;}
-.static-details b { color: #1a3147; }
+.static-details { background:#f3f6fa; border-radius: 7px; padding:14px 20px; margin-bottom:13px; font-size: 15px;}
 .row { display: flex; gap: 18px; flex-wrap: wrap; }
 .col-half { flex: 1 1 44%; min-width: 240px;}
 form label { font-weight: 700; margin: 12px 0 5px 0; display: block; color: #1f2937;}
-input, textarea, select { width: 100%; font-size: 15px; padding: 7px 9px; border: 1.2px solid #969696;
-  border-radius: 5px; margin-bottom: 2px; box-sizing: border-box; }
+input, textarea, select { width: 100%; font-size: 15px; padding: 7px 9px; border: 1.2px solid #969696; border-radius: 5px; margin-bottom: 2px; box-sizing: border-box; }
 textarea { min-height: 45px; resize: vertical;}
-button { margin-top: 16px; font-size: 16px; background: #0078d7; border: none;
-  color: white; font-weight: bold; padding: 10px 20px; border-radius: 5px; cursor: pointer;}
+button { margin-top: 16px; font-size: 16px; background: #0078d7; border: none; color: white; font-weight: bold; padding: 10px 20px; border-radius: 5px; cursor: pointer;}
 button:hover { background: #005ea6; }
 .client-label {margin-top:8px; margin-bottom:2px;}
 table { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 16px; background: white;}
 th, td { border: 1.2px solid #bbb; padding: 8px 7px;}
 th { background: #f2f6fb; font-weight: bold; text-align: center;}
-.desc-cell input { width:100%; min-width: 110px; max-width: 99%; font-size: 15px; padding: 6px 7px;}
+.desc-cell { padding-top:0 !important; vertical-align:top;}
+.desc-cell input { width:100%; font-size:15px; margin-bottom:4px;}
+.desc-cell textarea { width:100%; font-size:14px; margin-top:0;}
 .right { text-align: right; font-weight: bold;}
 .center { text-align: center; }
 .removeBtn { background: #e74c3c; color:white; border:none; border-radius: 3px; padding:4px 10px; font-weight: bold;}
@@ -43,9 +38,6 @@ th { background: #f2f6fb; font-weight: bold; text-align: center;}
 .summary-table td, .summary-table th { border: 1.2px solid #aaa; text-align: right; padding: 7px 10px;}
 .summary-table tr:last-child td { font-size: 1.18em; font-weight: bold;}
 .summary-table .right { font-weight: bold;}
-#whatsappShareBtn{background:#25d366;color:#fff;border:none;border-radius:4px;display:inline-block;padding:10px 17px;font-size:18px;font-weight:600;margin-top:7px;cursor:pointer;}
-#whatsappShareBtn:hover{background:#1da851;}
-#pdfNotice{font-size:13px;margin-top:7px;}
 @media(max-width:680px){
   .container {padding:5px 1vw;}
   .row { flex-direction: column;}
@@ -73,11 +65,7 @@ th { background: #f2f6fb; font-weight: bold; text-align: center;}
   <form id="mainForm" autocomplete="off">
     <div class="row">
       <div class="col-half">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <label class="client-label" for="invoiceNo" style="margin-bottom:0;">Invoice/Quotation No.</label>
-          <input type="checkbox" id="autoInv" checked style="width:auto;margin-left:8px;"/>
-          <label for="autoInv" style="font-size:12px; margin-bottom:0;display:inline;cursor:pointer;">Auto</label>
-        </div>
+        <label class="client-label" for="invoiceNo">Invoice/Quotation No.</label>
         <input type="text" id="invoiceNo" name="invoiceNo"/>
       </div>
       <div class="col-half">
@@ -104,9 +92,9 @@ th { background: #f2f6fb; font-weight: bold; text-align: center;}
       <thead>
         <tr>
           <th style="width: 6%;">Sr. No.</th>
-          <th style="width: 44%;">Description</th>
-          <th style="width: 16%;">Rate (INR)</th>
-          <th style="width: 12%;">Qty</th>
+          <th style="width: 38%;">Description<br><span style="font-weight:400;">Remark below</span></th>
+          <th style="width: 12%;">Rate (INR)</th>
+          <th style="width: 8%;">Qty</th>
           <th style="width: 18%;">Total Price (INR)</th>
           <th style="width: 4%;"></th>
         </tr>
@@ -117,13 +105,21 @@ th { background: #f2f6fb; font-weight: bold; text-align: center;}
     <div style="margin-top:20px;max-width:225px;margin-left:auto;">
       <label for="gstSelect" style="font-weight:bold;">Combined GST (CGST+SGST):</label>
       <select id="gstSelect">
-        <option value="0">No GST</option>
-        <option value="9">9%</option>
+        <option value="0">0%</option>
+        <option value="5">5%</option>
+        <option value="12">12%</option>
         <option value="18" selected>18%</option>
-        <option value="14">14%</option>
         <option value="28">28%</option>
+        <option value="40">40%</option>
       </select>
     </div>
+    <textarea id="invoiceRemark" name="invoiceRemark" rows="3" placeholder="Remark"></textarea>
+    <div style="margin-top:20px;max-width:250px;margin-left:auto;">
+      <label style="font-weight:bold; cursor:pointer;">
+        <input type="checkbox" id="toggleBankDetails" checked /> Show Bank Details
+      </label>
+    </div>
+    <div class="static-details" id="bankBlock"></div>
     <table class="summary-table" id="summaryTable">
       <tbody>
         <tr><td>Subtotal</td><td class="right" id="subtotalCell"></td></tr>
@@ -132,17 +128,12 @@ th { background: #f2f6fb; font-weight: bold; text-align: center;}
         <tr><td class="right">TOTAL</td><td class="right" id="totalCell"></td></tr>
       </tbody>
     </table>
-    <hr style="margin:30px 0 16px 0; border: 1px solid #ccc;" />
-    <div class="static-details" id="bankBlock"></div>
     <button type="button" id="generateBtn" style="width:100%; font-size:17px;">Generate & Download PDF</button>
-    <button type="button" id="whatsappShareBtn" style="display:none;width:100%;">Share via WhatsApp</button>
-    <div id="pdfNotice" style="display:none;">If WhatsApp does not auto-attach the PDF, select and attach the invoice file from your device's Downloads folder.</div>
   </form>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <script>
-// ==== Business data ====
 const businesses = {
   "ravish": {
     name: "RAVISH ENTERPRISE",
@@ -176,13 +167,7 @@ const businesses = {
 function updateBizFields(){
   let sel = document.getElementById('bizType').value;
   let d = businesses[sel];
-  // Main block
-  let cbox = document.getElementById('companyBlock');
-  cbox.innerHTML = `<b>${d.name}</b><br>
-    ${d.address}<br>
-    Contact: ${d.contact}<br>
-    GST NO: ${d.gst}`;
-  // Bank block
+  document.getElementById('companyBlock').innerHTML = `<b>${d.name}</b><br>${d.address}<br>Contact: ${d.contact}<br>GST NO: ${d.gst}`;
   const b = d.bank;
   let btxt = `<b>Bank Details</b><br>`;
   btxt += `Account Name: ${b.accountName}<br>`;
@@ -196,49 +181,7 @@ function updateBizFields(){
 updateBizFields();
 document.getElementById('bizType').addEventListener('change', ()=>{
   updateBizFields();
-  updateAutoInvoiceNumber();
 });
-function getFinYear(date){
-  let d = date ? new Date(date) : new Date();
-  let y = d.getFullYear(), m = d.getMonth()+1;
-  let fy1 = m >= 4 ? y : y-1, fy2 = m >= 4 ? y+1 : y;
-  return [String(fy1).slice(-2), String(fy2).slice(-2)];
-}
-function getAutoInvNumber(){
-  let today = document.getElementById('invoiceDate').value || new Date().toISOString().slice(0,10);
-  let [yy1,yy2] = getFinYear(today);
-  let isQt = document.getElementById('tab-quotation').classList.contains('active');
-  let type = isQt ? 'QT' : 'INV';
-  let prefix = "REE";
-  let key = document.getElementById('bizType').value+"_"+type+"_"+yy1+yy2;
-  let serial = parseInt(localStorage.getItem(key) || "0",10) + 1;
-  localStorage.setItem(key, serial);
-  return `${prefix}/${yy1}-${yy2}/${String(serial).padStart(4,'0')}`;
-}
-function getNextAutoInvNumber(){
-  let today = document.getElementById('invoiceDate').value || new Date().toISOString().slice(0,10);
-  let [yy1,yy2] = getFinYear(today);
-  let isQt = document.getElementById('tab-quotation').classList.contains('active');
-  let type = isQt ? 'QT' : 'INV';
-  let prefix = "REE";
-  let key = document.getElementById('bizType').value+"_"+type+"_"+yy1+yy2;
-  let serial = parseInt(localStorage.getItem(key) || "0",10) + 1;
-  return `${prefix}/${yy1}-${yy2}/${String(serial).padStart(4,'0')}`;
-}
-function updateAutoInvoiceNumber(){
-  const auto = document.getElementById('autoInv').checked;
-  const invoiceNoField = document.getElementById('invoiceNo');
-  if(auto){
-    invoiceNoField.value = getNextAutoInvNumber();
-    invoiceNoField.readOnly = true;
-  }else{
-    invoiceNoField.readOnly = false;
-  }
-}
-document.getElementById('autoInv').addEventListener('change', updateAutoInvoiceNumber);
-document.getElementById('invoiceDate').addEventListener('change', updateAutoInvoiceNumber);
-document.getElementById('bizType').addEventListener('change', updateAutoInvoiceNumber);
-
 const tabs = document.querySelectorAll('.tab');
 const documentTitle = document.getElementById('documentTitle');
 const gstSelect = document.getElementById('gstSelect');
@@ -254,63 +197,61 @@ let mode = 'invoice';
 const itemsBody = document.getElementById('itemsBody');
 function updateTotalsTable() {
   let subtotal = 0;
+  const gstPercent = parseFloat(gstSelect.value) || 0;
   [...itemsBody.children].forEach(tr => {
     const rate = parseFloat(tr.querySelector('.rate').value) || 0;
     const qty = parseInt(tr.querySelector('.qty').value) || 0;
     subtotal += rate * qty;
+    tr.querySelector('.totalPrice').textContent = (rate * qty).toFixed(2);
   });
   subtotalCell.textContent = subtotal.toFixed(2);
-  let sel = parseFloat(gstSelect.value) || 0;
-  let cgst = 0, sgst = 0, total = subtotal;
-  if (sel > 0) {
-    cgst = subtotal * (sel / 2) / 100;
-    sgst = subtotal * (sel / 2) / 100;
+  if(gstPercent > 0){
+    const halfGST = subtotal * (gstPercent/2) / 100;
     cgstRow.style.display = '';
     sgstRow.style.display = '';
-    cgstLabel.textContent = (sel / 2).toFixed(1);
-    sgstLabel.textContent = (sel / 2).toFixed(1);
-    cgstCell.textContent = cgst.toFixed(2);
-    sgstCell.textContent = sgst.toFixed(2);
-    total = subtotal + cgst + sgst;
+    cgstLabel.textContent = (gstPercent/2).toFixed(1);
+    sgstLabel.textContent = (gstPercent/2).toFixed(1);
+    cgstCell.textContent = halfGST.toFixed(2);
+    sgstCell.textContent = halfGST.toFixed(2);
+    totalCell.textContent = (subtotal + 2*halfGST).toFixed(2);
   } else {
     cgstRow.style.display = 'none';
     sgstRow.style.display = 'none';
-    cgstCell.textContent = sgstCell.textContent = '';
+    cgstCell.textContent = '';
+    sgstCell.textContent = '';
+    totalCell.textContent = subtotal.toFixed(2);
   }
-  totalCell.textContent = total.toFixed(2);
 }
-function createItemRow(desc = '', rate = '', qty = '') {
+function updateSrNumbers() {
+  [...itemsBody.children].forEach((tr, i)=>{ tr.children[0].textContent = i+1; });
+}
+function createItemRow(desc = '', rate = '', qty = '', remark = '') {
   const tr = document.createElement('tr');
   tr.innerHTML = `
     <td class="center"></td>
-    <td class="desc-cell"><input type="text" class="desc" style="min-width:170px;max-width:99%;font-size:15px;" value="${desc}" required /></td>
-    <td><input type="number" class="rate" style="text-align:right;min-width:70px;" value="${rate}" min="0" step="any" required /></td>
-    <td><input type="number" class="qty" style="text-align:right;min-width:55px;" value="${qty}" min="0" step="1" required /></td>
+    <td class="desc-cell">
+      <input type="text" class="desc" style="width:100%;font-size:15px;margin-bottom:6px;" value="${desc}" required />
+      <textarea class="remark" style="width:100%;font-size:14px;" rows="2" placeholder="Remark (optional)">${remark}</textarea>
+    </td>
+    <td><input type="number" class="rate" style="text-align:right;min-width:60px;" value="${rate}" min="0" step="any" required /></td>
+    <td><input type="number" class="qty" style="text-align:right;min-width:40px;" value="${qty}" min="0" step="1" required /></td>
     <td class="right totalPrice" style="min-width: 84px;"></td>
     <td class="center"><button type="button" class="removeBtn">X</button></td>
   `;
   itemsBody.appendChild(tr);
   updateSrNumbers();
-  const update = () => {
-    const rate = parseFloat(tr.querySelector('.rate').value) || 0;
-    const qty = parseInt(tr.querySelector('.qty').value) || 0;
-    tr.querySelector('.totalPrice').textContent = (rate * qty).toFixed(2);
-    updateTotalsTable();
-  };
+  function update() { updateTotalsTable(); }
   tr.querySelector('.rate').addEventListener('input', update);
   tr.querySelector('.qty').addEventListener('input', update);
   tr.querySelector('.desc').addEventListener('input', update);
-  tr.querySelector('.removeBtn').addEventListener('click', () => { tr.remove(); updateSrNumbers(); updateTotalsTable(); });
+  tr.querySelector('.remark').addEventListener('input', update);
+  tr.querySelector('.removeBtn').addEventListener('click', () => {
+    tr.remove();
+    updateSrNumbers();
+    updateTotalsTable();
+  });
   update();
 }
-function updateSrNumbers() {
-  [...itemsBody.children].forEach((tr, i)=>{ tr.children[0].textContent = i+1; });
-}
-document.getElementById('addItemBtn').addEventListener('click', () => createItemRow());
-createItemRow();
-gstSelect.addEventListener('change', updateTotalsTable);
-itemsBody.addEventListener('input', updateTotalsTable);
-
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
     tabs.forEach(t => { t.classList.remove('active', 'invoice', 'quotation'); t.setAttribute('aria-selected', 'false'); });
@@ -319,24 +260,24 @@ tabs.forEach(tab => {
     mode = tab.id === 'tab-invoice' ? 'invoice' : 'quotation';
     documentTitle.textContent = mode.toUpperCase();
     updateTotalsTable();
-    updateAutoInvoiceNumber();
   });
 });
-updateAutoInvoiceNumber();
-
+const bankDetailsToggle = document.getElementById('toggleBankDetails');
+const bankBlock = document.getElementById('bankBlock');
+bankDetailsToggle.addEventListener('change', () => { bankBlock.style.display = bankDetailsToggle.checked ? '' : 'none'; });
+bankBlock.style.display = bankDetailsToggle.checked ? '' : 'none';
+document.getElementById('addItemBtn').addEventListener('click', () => createItemRow());
+gstSelect.addEventListener('change', updateTotalsTable);
+itemsBody.innerHTML = '';
+createItemRow();
 document.getElementById('generateBtn').addEventListener('click', () => {
   const fields = ['invoiceNo', 'invoiceDate', 'clientName'];
-  for (const id of fields) {
-    if (!document.getElementById(id).value.trim()) {
-      alert('Please fill out Invoice/Quotation No, Date, and Client Name.');
-      return;
-    }
-  }
+  for (const id of fields) if (!document.getElementById(id).value.trim()) {
+    alert('Please fill out Invoice/Quotation No, Date, and Client Name.'); return; }
   if (!itemsBody.children.length) { alert('Add at least one item.'); return; }
   for (const tr of itemsBody.children) {
     if (!tr.querySelector('.desc').value.trim() || Number(tr.querySelector('.rate').value) < 0 || Number(tr.querySelector('.qty').value) < 0) {
-      alert('Fill out all item fields with valid, non-negative numbers.'); return;
-    }
+      alert('Fill out item fields with valid, non-negative numbers.'); return; }
   }
   let subtotal = parseFloat(subtotalCell.textContent) || 0;
   let combinedGSTPercent = parseFloat(gstSelect.value) || 0;
@@ -346,43 +287,21 @@ document.getElementById('generateBtn').addEventListener('click', () => {
     sgst = subtotal * (combinedGSTPercent/2) / 100;
     total = subtotal + cgst + sgst;
   }
-  // Advance auto number only when PDF is generated
-  if(document.getElementById('autoInv').checked){
-    const currVal = document.getElementById('invoiceNo').value;
-    if(currVal === getNextAutoInvNumber()){
-      let today = document.getElementById('invoiceDate').value || new Date().toISOString().slice(0,10);
-      let [yy1,yy2] = getFinYear(today);
-      let isQt = document.getElementById('tab-quotation').classList.contains('active');
-      let type = isQt ? 'QT' : 'INV';
-      let key = document.getElementById('bizType').value+"_"+type+"_"+yy1+yy2;
-      let serial = parseInt(localStorage.getItem(key) || "0",10) + 1;
-      localStorage.setItem(key, serial); // update storage!
-    }
-  }
-  // PDF rendering!
   const sel = document.getElementById('bizType').value;
-  const cz = businesses[sel];
-
+  const bz = businesses[sel];
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'pt', format:'a4' });
   let y = 38;
-  // --------- Company block (top left)
   doc.setFontSize(20); doc.setFont('helvetica','bold');
-  doc.text(cz.name, 40, y); y += 25;
+  doc.text(bz.name, 40, y); y += 25;
   doc.setFontSize(13); doc.setFont('helvetica','normal');
   doc.text(mode.toUpperCase(), 40, y); y += 25;
   doc.setFontSize(10);
   doc.text(`No: ${document.getElementById('invoiceNo').value||''}`, 40, y);
   doc.text(`Date: ${document.getElementById('invoiceDate').value||''}`, 170, y); y += 15;
-  let companyAddLines = [
-    cz.address,
-    "Contact: " + cz.contact,
-    "GST NO: " + cz.gst
-  ];
+  let companyAddLines = [bz.address, "Contact: " + bz.contact, "GST NO: " + bz.gst];
   for(const line of companyAddLines){ doc.text(line, 40, y); y += 14; }
-  // figure out end of company block
   let clientY = y;
-  // ----------- Client block (TO), always below company block
   doc.setFont('helvetica','bold'); doc.text('TO:', 340, clientY-28);
   doc.setFont('helvetica','normal');
   let ci = document.getElementById('clientName').value || '';
@@ -392,96 +311,92 @@ document.getElementById('generateBtn').addEventListener('click', () => {
   if(ca){ caddrLines.push(...doc.splitTextToSize(ca, 200)); }
   if(cg){ caddrLines.push("GST NO: "+cg); }
   let lineStartY = clientY-12;
-  for(const l of caddrLines){
-    doc.text(l, 340, lineStartY);
-    lineStartY += 14;
-  }
-  // Items table after blocks!
+  for(const l of caddrLines){ doc.text(l, 340, lineStartY); lineStartY += 14; }
   y = Math.max(y, lineStartY) + 6;
-  const headers = [[ "Sr. No.", "Description", "Rate", "Quantity", "Total Price (INR)"]];
+  const headers = [["Sr. No.", "Description", "Rate", "Quantity", "Total Price (INR)"]];
   let body = [];
   [...itemsBody.children].forEach((tr,i)=>{
-    const d = tr.querySelector('.desc').value,
-          r = parseFloat(tr.querySelector('.rate').value).toFixed(2),
-          q = Number(tr.querySelector('.qty').value),
-          t = (parseFloat(r)*q).toFixed(2);
-    body.push([String(i+1), d, r, String(q), {content:t, styles:{fontStyle:'bold'}}]);
+    // Combine description + remark in one cell
+    const descText = tr.querySelector('.desc').value;
+    const remarkText = tr.querySelector('.remark').value;
+    let itemDescPDF = descText;
+    if (remarkText.trim()) itemDescPDF += '\n' + remarkText.trim();
+    const rRaw = parseFloat(tr.querySelector('.rate').value);
+    const r = rRaw.toFixed(2);
+    const q = Number(tr.querySelector('.qty').value);
+    const t = (r * q).toFixed(2);
+    body.push([
+      String(i+1), itemDescPDF, r, String(q), {content:t, styles:{fontStyle:'bold'}}
+    ]);
   });
   doc.autoTable({
-    head: headers,
-    body,
-    startY: y+8,
-    theme: 'grid',
+    head: headers, body, startY: y+8, theme: 'grid',
     headStyles: { fillColor: [220,220,220], textColor: 0, fontStyle: 'bold' },
     bodyStyles: { fontSize: 10 },
     columnStyles: {
       0: { cellWidth:36, halign:'center' },
-      1: { cellWidth:230, halign:'left' },
-      2: { cellWidth:62, halign:'right' },
-      3: { cellWidth:56, halign:'right' },
-      4: { cellWidth:92, halign:'right', fontStyle:'bold' }
+      1: { cellWidth:210 },
+      2: { cellWidth:50, halign:'right' },
+      3: { cellWidth:40, halign:'right' },
+      4: { cellWidth:70, halign:'right', fontStyle:'bold' }
     },
-    margin: { left:40, right:40 }, styles:{ overflow: 'linebreak' }
+    margin: { left:40, right:40 }, styles: { overflow:'linebreak' }
   });
   let sy = doc.lastAutoTable.finalY;
-  let summaryRows = [
-    [ {content:'Subtotal',colSpan:1,styles:{fontStyle:'normal',halign:'left'}}, {content:subtotal.toFixed(2), styles:{fontStyle:'bold',halign:'right'}} ]
-  ];
-  if(combinedGSTPercent>0){
-    summaryRows.push(
-      [ {content:`CGST (${(combinedGSTPercent/2).toFixed(1)}%)`, styles:{fontStyle:'normal',halign:'left'}}, {content:cgst.toFixed(2), styles:{fontStyle:'bold',halign:'right'}} ],
-      [ {content:`SGST (${(combinedGSTPercent/2).toFixed(1)}%)`, styles:{fontStyle:'normal',halign:'left'}}, {content:sgst.toFixed(2), styles:{fontStyle:'bold',halign:'right'}} ]
-    );
+  const invoiceRemark = document.getElementById('invoiceRemark').value.trim();
+  if (invoiceRemark) {
+    doc.setFont('helvetica','normal');
+    const lines = doc.splitTextToSize(invoiceRemark, doc.internal.pageSize.getWidth() - 80);
+    doc.text(lines, 40, sy+18); sy = sy+18 + lines.length*12;
   }
-  summaryRows.push([
-    { content: 'TOTAL', styles: { fontStyle: 'bold', fontSize:12,halign:'left' } },
-    { content: total.toFixed(2), styles: { fontStyle: 'bold', fontSize:12,halign:'right' } }
-  ]);
   doc.autoTable({
-    body: summaryRows,
-    startY: sy+7,
-    theme: 'grid',
-    head:[],
+    body: [
+      ["Subtotal", subtotal.toFixed(2)],
+      ...(combinedGSTPercent > 0
+        ? [
+            [`CGST (${(combinedGSTPercent/2).toFixed(1)}%)`, cgst.toFixed(2)],
+            [`SGST (${(combinedGSTPercent/2).toFixed(1)}%)`, sgst.toFixed(2)]
+          ]
+        : []
+      ),
+      ["TOTAL", total.toFixed(2)]
+    ],
+    startY: sy+18, theme:'grid', head:[],
     margin: { left: doc.internal.pageSize.getWidth()-220, right:40 },
     tableLineColor: 150, tableLineWidth: 0.5,
     bodyStyles: { fontSize: 10 },
-    styles: { overflow:'linebreak', cellPadding: 3 },
-    columnStyles: { 0: {cellWidth:110,halign:'left'}, 1:{cellWidth:60,halign:'right',fontStyle:'bold'} }
+    styles: { cellPadding: 3, overflow:'linebreak' },
+    columnStyles: { 0:{cellWidth:110,halign:'left'}, 1:{cellWidth:60,halign:'right',fontStyle:'bold'} }
   });
-  let by = doc.lastAutoTable.finalY+20;
-  doc.setFont('helvetica','bold'); doc.text('Bank Details', 40, by); by += 15; doc.setFont('helvetica','normal');
-  doc.text('Account Name: '+cz.bank.accountName, 40, by); by += 13;
-  doc.text('Bank Name: '+cz.bank.bankName, 40, by); by += 13;
-  doc.text('Account No: '+cz.bank.accountNo, 40, by); by += 13;
-  if(cz.bank.accountType) {doc.text('Account Type: '+cz.bank.accountType, 40, by); by+=13;}
-  doc.text('IFSC Code: '+cz.bank.ifsc, 40, by); by += 13;
-  if(cz.bank.pan){ doc.text('PAN No.: '+cz.bank.pan, 40, by); }
-
+  let summaryY = doc.lastAutoTable.finalY;
+  if(document.getElementById('toggleBankDetails').checked){
+    let by = summaryY + 18;
+    doc.setFont('helvetica', 'bold');
+    doc.text('Bank Details', 40, by);
+    by += 15;
+    doc.setFont('helvetica', 'normal');
+    doc.text('Account Name: ' + bz.bank.accountName, 40, by);
+    by += 13;
+    doc.text('Bank Name: ' + bz.bank.bankName, 40, by);
+    by += 13;
+    doc.text('Account No: ' + bz.bank.accountNo, 40, by);
+    by += 13;
+    if (bz.bank.accountType) {
+      doc.text('Account Type: ' + bz.bank.accountType, 40, by);
+      by += 13;
+    }
+    doc.text('IFSC Code: ' + bz.bank.ifsc, 40, by);
+    by += 13;
+    if (bz.bank.pan) {
+      doc.text('PAN No.: ' + bz.bank.pan, 40, by);
+    }
+  }
   let filename = (mode==='invoice'?'INV':'QT')+"_"+(document.getElementById('invoiceNo').value||'').replace(/[^a-z0-9]/gi,'_')+".pdf";
   doc.save(filename);
-  if(document.getElementById('autoInv').checked)
-    updateAutoInvoiceNumber();
-
-  // Show WhatsApp Share UI
-  window.latestInvoiceFileName = filename;
-  showWhatsappBtn();
 });
-
-function showWhatsappBtn(){
-  document.getElementById('whatsappShareBtn').style.display = '';
-  document.getElementById('pdfNotice').style.display = '';
-}
-// WhatsApp share logic
-document.getElementById('whatsappShareBtn').addEventListener('click',()=>{
-  let companyName = businesses[document.getElementById('bizType').value].name;
-  let fileName = window.latestInvoiceFileName || '';
-  let msg = encodeURIComponent(`Please find attached your invoice from ${companyName}. Downloaded PDF: ${fileName}`);
-  let waurl = `https://wa.me/?text=${msg}`;
-  window.open(waurl,'_blank');
-});
-
+document.getElementById('mainForm').addEventListener('input', updateTotalsTable);
 updateTotalsTable();
-updateAutoInvoiceNumber();
 </script>
 </body>
 </html>
+
